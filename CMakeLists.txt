@@ -18,8 +18,8 @@ if(MSVC)
 	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W0 ${OpenMP_CXX_FLAGS}")
 endif(MSVC)
 
-include_directories (include)
-add_subdirectory (include)
+include_directories (dependencies)
+add_subdirectory (dependencies)
 
 include_directories (comunication)
 add_subdirectory (comunication)

@@ -11,6 +11,7 @@ set ( SOURCES
 	
 set ( MOC_HEADERS
 	comunication_controller.hpp
+	TLCCS.h
 	)
 
 add_library (comunication main.cpp comunication_controller.cpp comunication_controller.hpp)

@@ -6,8 +6,10 @@
 #include <ansi_c.h> 
 #include <stdio.h>      
 #include <time.h>       
-#include <visa.h>       // we need visa (typically found in your VXIPNP\include directory)
-#include "TLCCS.h"      // the device driver header
+#include <visa.h>       
+#include "TLCCS.h"      
+#include <vector>
+
 
 #define MY_INTEGRATION_TIME   0.1            // 100 ms
 #define MY_SAMPLE_FILE        "output.txt"  
@@ -23,6 +25,8 @@ public:
 	void error_exit(ViStatus err);
 	void waitKeypress();
 
+	void process(std::vector <std::string> value);
+
 	
 protected:
 	
@@ -32,6 +36,16 @@ private:
 	FILE*       my_file = NULL;                    
 	
 public:
+	ViStatus    err;           
+	ViSession   resMgr;              
+	ViUInt32    i;                    
+	ViUInt32    j;                  
+	ViUInt32    cnt;                    
+	ViUInt32    status;                    
+	ViReal64    data[TLCCS_NUM_PIXELS];          
+	ViChar      rscStr[VI_FIND_BUFLEN];          
+	ViChar*     rscPtr;                          
+	time_t      t;                               
 	
 };
 #endif // COMUNICATIONCONTROLL_H
