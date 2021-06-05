@@ -5,7 +5,7 @@
 
 #include <stdio.h>      
 #include <time.h>       
-#include <visa.h>       
+#include "visa.h"
 #include "TLCCS.h"      
 #include <vector>
 
@@ -21,11 +21,6 @@ public:
 	comunicationControll();
 	~comunicationControll();
 
-	void error_exit(ViStatus err);
-	void waitKeypress();
-
-	void process(char *value[], bool resoucers);
-
 	
 protected:
 	
@@ -34,6 +29,11 @@ private:
 	ViSession   instr = VI_NULL;                 
 	FILE*       my_file = NULL;
 	ViUInt32    getStatus = 0;
+
+	void error_exit(ViStatus err);
+	void waitKeypress();
+
+	void process(char *value[], bool resoucers);
 	
 public:
 	ViStatus    err;           
