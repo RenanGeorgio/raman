@@ -35,7 +35,7 @@ void comunicationControll::waitKeypress() {
 	while (getchar() == EOF);
 }
 
-void comunicationControll::process(std::vector <std::string> value) {
+void comunicationControll::process(char *value[], bool resoucers) {
 	// try to open file
 	my_file = fopen(MY_SAMPLE_FILE, "w");
 	if (my_file == NULL)  return;
@@ -43,7 +43,7 @@ void comunicationControll::process(std::vector <std::string> value) {
 	printf("Abrindo aplicacao");
 
 	// Parameter checking / Resource scanning
-	if (value.size() < 2)
+	if (resoucers)
 	{
 		// Find resources
 		printf("Scanning for CCS instruments ...\n");
@@ -56,7 +56,7 @@ void comunicationControll::process(std::vector <std::string> value) {
 	else
 	{
 		// Got resource in command line
-		rscPtr = (ViChar)value[0];
+		rscPtr = value[0];
 	}
 
 	// try to open CCS
@@ -78,12 +78,12 @@ void comunicationControll::process(std::vector <std::string> value) {
 	while (i < MY_SCAN_COUNT)
 	{
 		// request device status
-		err = tlccs_getDeviceStatus(instr, &status);
+		err = tlccs_getDeviceStatus(instr, status);
 		// error handling
 		if (err)  error_exit(err);
 
 		// camera is idle -> we can trigger a scan
-		if (status & TLCCS_STATUS_SCAN_IDLE)
+		if (getStatus & TLCCS_STATUS_SCAN_IDLE)
 		{
 			// trigger scan
 			err = tlccs_startScan(instr);
@@ -92,7 +92,7 @@ void comunicationControll::process(std::vector <std::string> value) {
 		}
 
 		// camera has data available for transfer
-		if (status & TLCCS_STATUS_SCAN_TRANSFER)
+		if (getStatus & TLCCS_STATUS_SCAN_TRANSFER)
 		{
 			printf("Starting scan %d of %d ...\n\n", i + 1, MY_SCAN_COUNT);
 

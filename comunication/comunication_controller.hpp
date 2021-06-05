@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include <ansi_c.h> 
 #include <stdio.h>      
 #include <time.h>       
 #include <visa.h>       
@@ -25,7 +24,7 @@ public:
 	void error_exit(ViStatus err);
 	void waitKeypress();
 
-	void process(std::vector <std::string> value);
+	void process(char *value[], bool resoucers);
 
 	
 protected:
@@ -33,7 +32,8 @@ protected:
 
 private:
 	ViSession   instr = VI_NULL;                 
-	FILE*       my_file = NULL;                    
+	FILE*       my_file = NULL;
+	ViUInt32    getStatus = 0;
 	
 public:
 	ViStatus    err;           
@@ -41,7 +41,7 @@ public:
 	ViUInt32    i;                    
 	ViUInt32    j;                  
 	ViUInt32    cnt;                    
-	ViUInt32    status;                    
+	ViPInt32    status; 
 	ViReal64    data[TLCCS_NUM_PIXELS];          
 	ViChar      rscStr[VI_FIND_BUFLEN];          
 	ViChar*     rscPtr;                          

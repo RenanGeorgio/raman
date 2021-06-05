@@ -14,6 +14,6 @@ set ( MOC_HEADERS
 	TLCCS.h
 	)
 
-add_library (comunication main.cpp comunication_controller.cpp comunication_controller.hpp)
+add_executable (comunication main.cpp comunication_controller.cpp comunication_controller.hpp)
 target_link_libraries(comunication) 
 
