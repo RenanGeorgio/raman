@@ -36,7 +36,7 @@
 #ifndef __TLCCS_H__
 #define __TLCCS_H__
 
-#include "vpptype.h"
+#include <vpptype.h>
 
 #if defined(__cplusplus) || defined(__cplusplus__)
 extern "C" {
