@@ -9,6 +9,7 @@
 #ifndef _FTS_H_
 #define _FTS_H_
 
+#include <stdbool.h>
 #include "FTSData.h"
 #include "FileIO.h"
 #include "FTSMath.h"

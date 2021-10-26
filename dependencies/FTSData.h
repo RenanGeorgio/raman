@@ -10,6 +10,8 @@
 #ifndef FTSDATA_H
 #define FTSDATA_H
 
+#include <stdbool.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif 

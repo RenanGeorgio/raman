@@ -1,7 +1,8 @@
- #include <stdio.h> 
+#include <stdio.h> 
 #include <time.h>     
 #include "visa.h"   
-#include "TLCCS.h"   
+#include "TLCCS.h" 
+#include "../dependencies/FTSVirtualSpectrometer.h"
 
 //==============================================================================
 // Constantes
@@ -30,6 +31,7 @@ void waitKeypress(void);
 //==============================================================================
 int main (int argc, char *argv[])
 {
+
    ViStatus    err      = VI_SUCCESS;           // error variable
    ViSession   resMgr   = VI_NULL;              // resource manager
    ViUInt32    i        = 0;                    // variavel para o loop
@@ -43,17 +45,42 @@ int main (int argc, char *argv[])
 
    FILE *filepoint;
 
+   SpectrometerIndex*         specIndex;
+   virtual_source_parameter_t virtual_device;
+   virtual_device = (virtual_source_parameter_t) { 
+	   .peakNum = 22, 
+	   .centerWavelength_nm = 380, 
+	   .fwhm_nm = 22, 
+	   .peakAmplitude = 22 
+   };
+
+   virtual_source_parameter_t* virtual_devicePtr;
+   virtual_devicePtr = &virtual_device;
+
+   if (FTS_CreateVirtualSpectrometer(specIndex, INSTRUMENT_VIRTUAL_OSA201) != FTS_SUCCESS) {
+	   return -1;
+   }
+   
+ 
+   if (FTS_SetupVirtualSource(specIndex, VIRTUAL_SOURCE_MONOCHROMATIC, virtual_devicePtr) != FTS_SUCCESS) {
+	   return -1;
+   }
+
    my_file = fopen_s(&filepoint, MY_SAMPLE_FILE, "w");
-   //if(my_file == NULL)  return -1;
 
    printf("Abrindo Thorlabs CCS instrument driver\n");
 
+   printf("Procurando por instrumentos CCS ...\n");
+
+   printf("Pressione <ENTER> e saia\n");
    // Checando parametros e recursos
    if(argc < 2)
    {
       printf("Procurando por instrumentos CCS ...\n");
       if((err = viOpenDefaultRM(&resMgr))) error_exit(err);
+	  
       if((err = viFindRsrc(resMgr, TLCCS_FIND_PATTERN, VI_NULL, &cnt, rscStr))) error_exit(err);
+	  
       printf("Encontrado %u instrumento%s ...\n\n", cnt, (cnt>1) ? "s" : "");
       rscPtr = rscStr;
       viClose(resMgr);

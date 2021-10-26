@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 #include "FTSData.h"
+#include <stdbool.h>
 
 #ifndef FTSFILEIO_H
 #define FTSFILEIO_H

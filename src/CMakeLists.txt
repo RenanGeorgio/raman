@@ -12,6 +12,8 @@ set ( MOC_HEADERS
 	TLCCS.h
 	visatype.h
 	vpptype.h
+	cvirte.h
+	cvidef.h
 	)
 
 add_executable (raman ${SOURCES} ${MOC_HEADERS})
